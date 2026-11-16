@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5eddf">
+<title>EXCUSE ME FRENCH | Crêpes & More</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root {
+  --paper:#f5eddf;
+  --ink:#33251e;
+  --red:#9b392e;
+  --gold:#bd965d;
+  --muted:#847464;
+}
+*{box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Georgia,'Times New Roman',serif;
+}
+header {
+  text-align:center;
+  padding:35px 18px 20px;
+  border-bottom:1px solid var(--gold);
+  margin:0 18px;
+}
+.logo {
+  width:112px;height:112px;
+  object-fit:contain;
+  border-radius:50%;
+  margin-bottom:12px;
+}
+.brand {
+  font-size:clamp(27px,7vw,43px);
+  font-weight:bold;
+  letter-spacing:2px;
+}
+.subtitle {
+  color:var(--red);
+  letter-spacing:4px;
+  font-size:12px;
+  margin-top:9px;
+}
+.tagline {
+  color:var(--muted);
+  font-style:italic;
+  margin-top:14px;
+  font-size:15px;
+}
+.language {
+  text-align:center;
+  margin:18px;
+}
+.language button,.category {
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--ink);
+  padding:10px 17px;
+  font-family:inherit;
+  cursor:pointer;
+}
+.language button.active,.category.active {
+  background:var(--red);
+  color:white;
+  border-color:var(--red);
+}
+.categories {
+  display:flex;
+  gap:8px;
+  padding:8px 18px 20px;
+  overflow-x:auto;
+  justify-content:flex-start;
+}
+.category {
+  white-space:nowrap;
+  border-radius:2px;
+  font-size:13px;
+}
+main {
+  max-width:760px;
+  margin:auto;
+  padding:0 20px 50px;
+}
+.section-title {
+  text-align:center;
+  color:var(--red);
+  font-size:25px;
+  margin:15px 0 22px;
+}
+.product {
+  display:grid;
+  grid-template-columns:105px 1fr;
+  gap:15px;
+  padding:17px 0;
+  border-bottom:1px dotted var(--gold);
+}
+.product img {
+  width:105px;height:105px;
+  object-fit:cover;
+  background:#e7dac5;
+}
+.product h3 {
+  font-size:18px;
+  margin:2px 0 7px;
+}
+.product p {
+  font-size:13px;
+  line-height:1.5;
+  color:var(--muted);
+  margin:0;
+}
+.price {
+  color:var(--red);
+  font-weight:bold;
+  font-size:17px;
+  margin-top:9px;
+}
+.empty {
+  text-align:center;
+  padding:35px 10px;
+  color:var(--muted);
+}
+footer {
+  text-align:center;
+  padding:25px;
+  border-top:1px solid var(--gold);
+  color:var(--muted);
+  font-size:12px;
+  letter-spacing:2px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img class="logo" src="logo.png" alt="EXCUSE ME FRENCH logo"
+       onerror="this.style.display='none'">
+  <div class="brand">EXCUSE ME FRENCH</div>
+  <div class="subtitle">CRÊPES & MORE</div>
+  <div class="tagline" id="tagline">A little French taste in your day</div>
+</header>
+
+<div class="language">
+  <button id="greek" class="active" onclick="setLanguage('el')">ΕΛΛΗΝΙΚΑ</button>
+  <button id="english" onclick="setLanguage('en')">ENGLISH</button>
+</div>
+
+<nav class="categories" id="categories"></nav>
+
+<main>
+  <h2 class="section-title" id="sectionTitle">Ο κατάλογός μας</h2>
+  <div id="products">
+    <div class="empty">Φόρτωση καταλόγου...</div>
+  </div>
+</main>
+
+<footer>
+  EXCUSE ME FRENCH · CRÊPES & MORE<br>
+  LARISSA
+</footer>
+
+<script>
+const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+let db = null;
+let language = "el";
+let categories = [];
+let products = [];
+let selectedCategory = null;
+
+const demoCategories = [
+  {id:1,name_el:"Κρέπες Αλμυρές",name_en:"Savory Crêpes"},
+  {id:2,name_el:"Κρέπες Γλυκές",name_en:"Sweet Crêpes"},
+  {id:3,name_el:"Sandwiches",name_en:"Sandwiches"},
+  {id:4,name_el:"Club Sandwiches",name_en:"Club Sandwiches"}
+];
+
+function setLanguage(lang) {
+  language=lang;
+  document.getElementById("greek").classList.toggle("active",lang==="el");
+  document.getElementById("english").classList.toggle("active",lang==="en");
+  document.getElementById("sectionTitle").textContent =
+    lang==="el" ? "Ο κατάλογός μας" : "Our Menu";
+  render();
+}
+
+function renderCategories() {
+  const nav=document.getElementById("categories");
+  nav.innerHTML="";
+
+  const all=document.createElement("button");
+  all.className="category"+(selectedCategory===null?" active":"");
+  all.textContent=language==="el"?"Όλα":"All";
+  all.onclick=()=>{selectedCategory=null;render()};
+  nav.appendChild(all);
+
+  categories.forEach(cat=>{
+    const button=document.createElement("button");
+    button.className="category"+(selectedCategory===cat.id?" active":"");
+    button.textContent=language==="el"?cat.name_el:cat.name_en;
+    button.onclick=()=>{selectedCategory=cat.id;render()};
+    nav.appendChild(button);
+  });
+}
+
+function renderProducts() {
+  const container=document.getElementById("products");
+  container.innerHTML="";
+
+  const filtered=products.filter(p=>
+    p.active && p.available &&
+    (selectedCategory===null || p.category_id===selectedCategory)
+  );
+
+  if(!filtered.length) {
+    container.innerHTML=`<div class="empty">${
+      language==="el"?"Δεν υπάρχουν διαθέσιμα προϊόντα.":"No available products."
+    }</div>`;
+    return;
+  }
+
+  filtered.forEach(p=>{
+    const item=document.createElement("article");
+    item.className="product";
+
+    const img=document.createElement("img");
+    img.src=p.image_url || "";
+    img.alt=language==="el"?p.name_el:p.name_en;
+    img.loading="lazy";
+    if(!p.image_url) img.style.visibility="hidden";
+
+    const info=document.createElement("div");
+    const name=document.createElement("h3");
+    name.textContent=language==="el"?p.name_el:p.name_en;
+    const description=document.createElement("p");
+    description.textContent=language==="el"?
+      (p.description_el||""):(p.description_en||"");
+    const price=document.createElement("div");
+    price.className="price";
+    price.textContent=Number(p.price).toFixed(2)+" €";
+
+    info.append(name,description,price);
+    item.append(img,info);
+    container.appendChild(item);
+  });
+}
+
+function render() {
+  renderCategories();
+  renderProducts();
+}
+
+async function loadMenu() {
+  if(!SUPABASE_URL.startsWith("https://") ||
+     SUPABASE_ANON_KEY==="YOUR_SUPABASE_PUBLISHABLE_KEY") {
+    categories=demoCategories;
+    products=[];
+    render();
+    document.getElementById("products").innerHTML=
+      '<div class="empty">Η σύνδεση της βάσης δεδομένων εκκρεμεί.</div>';
+    return;
+  }
+
+  db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
+  const [c,p]=await Promise.all([
+    db.from("categories").select("*").eq("active",true).order("sort_order"),
+    db.from("products").select("*").eq("active",true)
+      .eq("available",true).order("sort_order")
+  ]);
+
+  if(c.error || p.error) {
+    document.getElementById("products").innerHTML=
+      '<div class="empty">Δεν ήταν δυνατή η φόρτωση του καταλόγου.</div>';
+    console.error(c.error,p.error);
+    return;
+  }
+
+  categories=c.data||[];
+  products=p.data||[];
+  render();
+}
+
+loadMenu();
+</script>
+
+</body>
+</html>
