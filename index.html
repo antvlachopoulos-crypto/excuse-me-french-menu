@@ -1,164 +1,400 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="el">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f5eddf">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4ead8">
+<meta name="description" content="EXCUSE ME FRENCH — Crêpes & More, Larissa">
 <title>EXCUSE ME FRENCH | Crêpes & More</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root {
-  --paper:#f5eddf;
-  --ink:#33251e;
-  --red:#9b392e;
-  --gold:#bd965d;
-  --muted:#847464;
+  --paper:#f4ead8;
+  --paper2:#fff8eb;
+  --ink:#30241d;
+  --accent:#922f27;
+  --accent2:#b98b50;
+  --muted:#796b5d;
+  --line:#c6a879;
+  --shadow:rgba(55,35,20,.14);
+  --font:Georgia,'Times New Roman',serif;
+  --radius:8px;
 }
-*{box-sizing:border-box}
+
+* { box-sizing:border-box; }
+
+html {
+  min-height:100%;
+  background:var(--paper);
+}
+
 body {
   margin:0;
-  background:var(--paper);
+  min-height:100vh;
   color:var(--ink);
-  font-family:Georgia,'Times New Roman',serif;
+  font-family:var(--font);
+  background:
+    radial-gradient(ellipse at top,rgba(255,255,255,.52),transparent 55%),
+    var(--paper);
+  transition:background .25s,color .25s;
 }
+
+/* THEME 1: VINTAGE PARIS */
+body[data-theme="vintage-paris"] {
+  --paper:#f1e4cd;
+  --paper2:#fff5e1;
+  --ink:#38271d;
+  --accent:#8f3028;
+  --accent2:#ad8149;
+  --muted:#806f5b;
+  --line:#b8905d;
+  --radius:4px;
+
+  background-image:
+    radial-gradient(ellipse at 10% 10%,rgba(163,119,67,.11),transparent 38%),
+    repeating-linear-gradient(0deg,rgba(100,65,30,.018) 0 1px,transparent 1px 5px),
+    linear-gradient(135deg,#ead8b9,#f7eddb 46%,#ead8b9);
+}
+
+/* THEME 2: MODERN BISTRO */
+body[data-theme="modern-bistro"] {
+  --paper:#e8eadc;
+  --paper2:#fbf9ed;
+  --ink:#1d3025;
+  --accent:#244b37;
+  --accent2:#a58a52;
+  --muted:#647367;
+  --line:#aab59d;
+  --radius:16px;
+
+  background-image:
+    radial-gradient(circle at 90% 5%,rgba(64,101,68,.12),transparent 33%),
+    linear-gradient(145deg,#e4e9dc,#f6f4e7);
+}
+
+/* THEME 3: FRENCH PATISSERIE */
+body[data-theme="french-patisserie"] {
+  --paper:#f8e8e5;
+  --paper2:#fff8f3;
+  --ink:#462a31;
+  --accent:#aa5867;
+  --accent2:#c69a69;
+  --muted:#856b70;
+  --line:#e0b8b0;
+  --radius:18px;
+
+  background-image:
+    radial-gradient(circle at 8% 8%,rgba(214,142,152,.18),transparent 32%),
+    linear-gradient(145deg,#f7e1df,#fff4ed);
+}
+
+/* THEME 4: CHRISTMAS */
+body[data-theme="christmas"] {
+  --paper:#e5eadf;
+  --paper2:#fff8e9;
+  --ink:#213b2c;
+  --accent:#a32c2b;
+  --accent2:#c9a35f;
+  --muted:#657568;
+  --line:#bba06e;
+  --radius:8px;
+
+  background-image:
+    radial-gradient(circle at 8% 8%,rgba(178,38,35,.12),transparent 25%),
+    radial-gradient(circle at 95% 12%,rgba(24,78,48,.14),transparent 29%),
+    linear-gradient(145deg,#e1e9df,#f6f0df);
+}
+
+button {
+  font:inherit;
+  cursor:pointer;
+}
+
 header {
+  max-width:900px;
+  margin:0 auto;
+  padding:34px 18px 20px;
   text-align:center;
-  padding:35px 18px 20px;
-  border-bottom:1px solid var(--gold);
-  margin:0 18px;
+  border-bottom:1px solid var(--line);
+  position:relative;
 }
+
+header:before,
+header:after {
+  content:"✦";
+  position:absolute;
+  top:55px;
+  color:var(--accent2);
+  font-size:20px;
+  opacity:.7;
+}
+
+header:before { left:8%; }
+header:after { right:8%; }
+
 .logo {
-  width:112px;height:112px;
+  display:block;
+  width:122px;
+  height:auto;
+  max-height:122px;
   object-fit:contain;
-  border-radius:50%;
-  margin-bottom:12px;
+  margin:0 auto 12px;
+  mix-blend-mode:multiply;
 }
+
 .brand {
-  font-size:clamp(27px,7vw,43px);
+  font-size:clamp(27px,7vw,44px);
   font-weight:bold;
   letter-spacing:2px;
+  line-height:1.1;
 }
+
 .subtitle {
-  color:var(--red);
+  color:var(--accent);
   letter-spacing:4px;
-  font-size:12px;
+  font:600 12px Arial,sans-serif;
   margin-top:9px;
 }
+
 .tagline {
   color:var(--muted);
   font-style:italic;
-  margin-top:14px;
+  margin-top:12px;
   font-size:15px;
 }
+
+body[data-theme="modern-bistro"] .brand,
+body[data-theme="christmas"] .brand {
+  letter-spacing:1px;
+}
+
+body[data-theme="french-patisserie"] header {
+  border-bottom:3px double var(--line);
+}
+
+body[data-theme="christmas"] header:before,
+body[data-theme="christmas"] header:after {
+  content:"❄";
+}
+
 .language {
   text-align:center;
-  margin:18px;
+  margin:18px 12px 10px;
 }
-.language button,.category {
-  background:transparent;
-  border:1px solid var(--gold);
+
+.language button,
+.category {
+  background:var(--paper2);
+  border:1px solid var(--line);
   color:var(--ink);
-  padding:10px 17px;
-  font-family:inherit;
-  cursor:pointer;
+  padding:10px 16px;
+  border-radius:var(--radius);
+  font-size:13px;
 }
-.language button.active,.category.active {
-  background:var(--red);
-  color:white;
-  border-color:var(--red);
+
+.language button.active,
+.category.active {
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
 }
+
 .categories {
   display:flex;
   gap:8px;
   padding:8px 18px 20px;
   overflow-x:auto;
-  justify-content:flex-start;
+  justify-content:center;
+  scrollbar-width:thin;
 }
+
 .category {
   white-space:nowrap;
-  border-radius:2px;
-  font-size:13px;
+  box-shadow:0 2px 5px var(--shadow);
 }
+
 main {
   max-width:760px;
   margin:auto;
-  padding:0 20px 50px;
+  padding:0 20px 46px;
 }
+
 .section-title {
   text-align:center;
-  color:var(--red);
+  color:var(--accent);
   font-size:25px;
-  margin:15px 0 22px;
+  margin:16px 0 20px;
 }
+
+.section-title:before,
+.section-title:after {
+  content:"❧";
+  color:var(--accent2);
+  font-size:18px;
+  margin:0 12px;
+}
+
 .product {
   display:grid;
-  grid-template-columns:105px 1fr;
+  grid-template-columns:105px minmax(0,1fr);
   gap:15px;
-  padding:17px 0;
-  border-bottom:1px dotted var(--gold);
+  padding:16px 14px;
+  margin:0 0 10px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--paper2);
+  box-shadow:0 3px 12px var(--shadow);
 }
+
+.product.no-image {
+  grid-template-columns:minmax(0,1fr);
+}
+
 .product img {
-  width:105px;height:105px;
+  width:105px;
+  height:105px;
   object-fit:cover;
-  background:#e7dac5;
+  border-radius:calc(var(--radius) - 3px);
+  background:var(--paper);
 }
+
 .product h3 {
   font-size:18px;
   margin:2px 0 7px;
 }
+
 .product p {
-  font-size:13px;
-  line-height:1.5;
+  font:13px/1.5 Arial,sans-serif;
   color:var(--muted);
   margin:0;
 }
+
 .price {
-  color:var(--red);
+  color:var(--accent);
   font-weight:bold;
   font-size:17px;
   margin-top:9px;
 }
+
 .empty {
   text-align:center;
   padding:35px 10px;
   color:var(--muted);
 }
+
+.ingredient {
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:center;
+  padding:13px 12px;
+  border-bottom:1px dashed var(--line);
+  background:var(--paper2);
+}
+
+.ingredient:first-child {
+  border-radius:var(--radius) var(--radius) 0 0;
+}
+
+.ingredient:last-child {
+  border-radius:0 0 var(--radius) var(--radius);
+}
+
 footer {
   text-align:center;
   padding:25px;
-  border-top:1px solid var(--gold);
+  border-top:1px solid var(--line);
   color:var(--muted);
-  font-size:12px;
+  font:11px Arial,sans-serif;
   letter-spacing:2px;
+}
+
+body[data-theme="modern-bistro"] .product {
+  box-shadow:0 6px 18px rgba(25,55,35,.08);
+}
+
+body[data-theme="french-patisserie"] .product {
+  box-shadow:0 5px 15px rgba(145,85,95,.09);
+}
+
+body[data-theme="christmas"] .product {
+  border-left:4px solid var(--accent);
+}
+
+@media(max-width:520px) {
+  header { padding-top:26px; }
+
+  .logo { width:108px; }
+
+  header:before,
+  header:after { top:48px; }
+
+  .categories {
+    justify-content:flex-start;
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  main {
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .product {
+    grid-template-columns:82px minmax(0,1fr);
+    gap:11px;
+    padding:12px;
+  }
+
+  .product img {
+    width:82px;
+    height:82px;
+  }
+
+  .product h3 { font-size:16px; }
+
+  .section-title { font-size:22px; }
+
+  .section-title:before,
+  .section-title:after {
+    margin:0 5px;
+  }
 }
 </style>
 </head>
 
-<body>
+<body data-theme="vintage-paris">
 
 <header>
-  <img class="logo" src="logo.png" alt="EXCUSE ME FRENCH logo"
-       onerror="this.style.display='none'">
+  <img class="logo" src="logo.png" alt="EXCUSE ME FRENCH logo">
   <div class="brand">EXCUSE ME FRENCH</div>
   <div class="subtitle">CRÊPES & MORE</div>
-  <div class="tagline" id="tagline">A little French taste in your day</div>
+  <div class="tagline">A little French taste in your day</div>
 </header>
 
 <div class="language">
-  <button id="greek" class="active" onclick="setLanguage('el')">ΕΛΛΗΝΙΚΑ</button>
-  <button id="english" onclick="setLanguage('en')">ENGLISH</button>
+  <button id="greek" class="active" type="button"
+          onclick="setLanguage('el')">ΕΛΛΗΝΙΚΑ</button>
+
+  <button id="english" type="button"
+          onclick="setLanguage('en')">ENGLISH</button>
 </div>
 
-<nav class="categories" id="categories"></nav>
+<nav class="categories" id="categories"
+     aria-label="Menu categories"></nav>
 
 <main>
   <h2 class="section-title" id="sectionTitle">Ο κατάλογός μας</h2>
+
   <div id="products">
     <div class="empty">Φόρτωση καταλόγου...</div>
   </div>
+
+  <section id="ingredientsSection" hidden>
+    <h2 class="section-title" id="ingredientsTitle">Τα υλικά μας</h2>
+    <div id="ingredientsList"></div>
+  </section>
 </main>
 
 <footer>
@@ -167,129 +403,309 @@ footer {
 </footer>
 
 <script>
-const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+'use strict';
 
-let db = null;
-let language = "el";
-let categories = [];
-let products = [];
-let selectedCategory = null;
+/* SUPABASE CONNECTION */
+const SUPABASE_URL =
+  'https://bybiqsrytnlptdqqtyil.supabase.co';
 
-const demoCategories = [
-  {id:1,name_el:"Κρέπες Αλμυρές",name_en:"Savory Crêpes"},
-  {id:2,name_el:"Κρέπες Γλυκές",name_en:"Sweet Crêpes"},
-  {id:3,name_el:"Sandwiches",name_en:"Sandwiches"},
-  {id:4,name_el:"Club Sandwiches",name_en:"Club Sandwiches"}
+const SUPABASE_KEY =
+  'sb_publishable_0bjdeVXHcr9T3oKxBtJOlg_rf7TEg_I';
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+/* AVAILABLE THEMES */
+const THEMES = [
+  'vintage-paris',
+  'modern-bistro',
+  'french-patisserie',
+  'christmas'
 ];
 
+let language = 'el';
+let categories = [];
+let products = [];
+let ingredients = [];
+let selectedCategory = null;
+let currentTheme = 'vintage-paris';
+
+/* APPLY THE SELECTED THEME */
+function applyTheme(theme) {
+  currentTheme = THEMES.includes(theme)
+    ? theme
+    : 'vintage-paris';
+
+  document.body.dataset.theme = currentTheme;
+}
+
+/* CHANGE LANGUAGE */
 function setLanguage(lang) {
-  language=lang;
-  document.getElementById("greek").classList.toggle("active",lang==="el");
-  document.getElementById("english").classList.toggle("active",lang==="en");
-  document.getElementById("sectionTitle").textContent =
-    lang==="el" ? "Ο κατάλογός μας" : "Our Menu";
+  language = lang;
+
+  document.getElementById('greek')
+    .classList.toggle('active', lang === 'el');
+
+  document.getElementById('english')
+    .classList.toggle('active', lang === 'en');
+
+  document.getElementById('sectionTitle').textContent =
+    lang === 'el' ? 'Ο κατάλογός μας' : 'Our Menu';
+
+  document.getElementById('ingredientsTitle').textContent =
+    lang === 'el' ? 'Τα υλικά μας' : 'Our Ingredients';
+
   render();
 }
 
+/* CATEGORY BUTTONS */
 function renderCategories() {
-  const nav=document.getElementById("categories");
-  nav.innerHTML="";
+  const nav = document.getElementById('categories');
 
-  const all=document.createElement("button");
-  all.className="category"+(selectedCategory===null?" active":"");
-  all.textContent=language==="el"?"Όλα":"All";
-  all.onclick=()=>{selectedCategory=null;render()};
-  nav.appendChild(all);
+  nav.replaceChildren();
 
-  categories.forEach(cat=>{
-    const button=document.createElement("button");
-    button.className="category"+(selectedCategory===cat.id?" active":"");
-    button.textContent=language==="el"?cat.name_el:cat.name_en;
-    button.onclick=()=>{selectedCategory=cat.id;render()};
+  const add = (id, label) => {
+    const button = document.createElement('button');
+
+    button.type = 'button';
+
+    button.className =
+      'category' +
+      (selectedCategory === id ? ' active' : '');
+
+    button.textContent = label;
+
+    button.onclick = () => {
+      selectedCategory = id;
+      render();
+    };
+
     nav.appendChild(button);
+  };
+
+  add(null, language === 'el' ? 'Όλα' : 'All');
+
+  categories.forEach(category => {
+    add(
+      category.id,
+      language === 'el'
+        ? category.name_el
+        : category.name_en
+    );
   });
+
+  add(
+    'ingredients',
+    language === 'el' ? 'Τα υλικά μας' : 'Our Ingredients'
+  );
 }
 
+/* PRODUCTS AND INGREDIENTS */
 function renderProducts() {
-  const container=document.getElementById("products");
-  container.innerHTML="";
+  const box = document.getElementById('products');
 
-  const filtered=products.filter(p=>
-    p.active && p.available &&
-    (selectedCategory===null || p.category_id===selectedCategory)
-  );
+  const section =
+    document.getElementById('ingredientsSection');
 
-  if(!filtered.length) {
-    container.innerHTML=`<div class="empty">${
-      language==="el"?"Δεν υπάρχουν διαθέσιμα προϊόντα.":"No available products."
-    }</div>`;
+  const isIngredients =
+    selectedCategory === 'ingredients';
+
+  box.hidden = isIngredients;
+  section.hidden = !isIngredients;
+
+  /* INGREDIENTS VIEW */
+  if (isIngredients) {
+    const list = document.getElementById('ingredientsList');
+
+    list.replaceChildren();
+
+    if (!ingredients.length) {
+      list.innerHTML =
+        '<div class="empty">' +
+        (language === 'el'
+          ? 'Δεν υπάρχουν διαθέσιμα υλικά.'
+          : 'No ingredients available.') +
+        '</div>';
+
+      return;
+    }
+
+    ingredients.forEach(item => {
+      const row = document.createElement('div');
+
+      row.className = 'ingredient';
+
+      const name = document.createElement('span');
+
+      name.textContent =
+        language === 'el'
+          ? item.name_el
+          : item.name_en;
+
+      const price = document.createElement('strong');
+
+      price.className = 'price';
+
+      price.style.margin = '0';
+
+      price.textContent =
+        Number(item.price).toFixed(2) + ' €';
+
+      row.append(name, price);
+
+      list.appendChild(row);
+    });
+
     return;
   }
 
-  filtered.forEach(p=>{
-    const item=document.createElement("article");
-    item.className="product";
+  /* PRODUCTS VIEW */
+  box.replaceChildren();
 
-    const img=document.createElement("img");
-    img.src=p.image_url || "";
-    img.alt=language==="el"?p.name_el:p.name_en;
-    img.loading="lazy";
-    if(!p.image_url) img.style.visibility="hidden";
+  const rows = products.filter(product =>
+    product.active &&
+    product.available &&
+    (
+      selectedCategory === null ||
+      product.category_id === selectedCategory
+    )
+  );
 
-    const info=document.createElement("div");
-    const name=document.createElement("h3");
-    name.textContent=language==="el"?p.name_el:p.name_en;
-    const description=document.createElement("p");
-    description.textContent=language==="el"?
-      (p.description_el||""):(p.description_en||"");
-    const price=document.createElement("div");
-    price.className="price";
-    price.textContent=Number(p.price).toFixed(2)+" €";
+  if (!rows.length) {
+    box.innerHTML =
+      '<div class="empty">' +
+      (language === 'el'
+        ? 'Δεν υπάρχουν διαθέσιμα προϊόντα.'
+        : 'No available products.') +
+      '</div>';
 
-    info.append(name,description,price);
-    item.append(img,info);
-    container.appendChild(item);
+    return;
+  }
+
+  rows.forEach(product => {
+    const article = document.createElement('article');
+
+    article.className =
+      'product' +
+      (product.image_url ? '' : ' no-image');
+
+    if (product.image_url) {
+      const img = document.createElement('img');
+
+      img.src = product.image_url;
+
+      img.alt =
+        language === 'el'
+          ? product.name_el
+          : product.name_en;
+
+      img.loading = 'lazy';
+
+      img.onerror = () => img.remove();
+
+      article.appendChild(img);
+    }
+
+    const info = document.createElement('div');
+
+    const name = document.createElement('h3');
+
+    const description = document.createElement('p');
+
+    const price = document.createElement('div');
+
+    name.textContent =
+      language === 'el'
+        ? product.name_el
+        : product.name_en;
+
+    description.textContent =
+      language === 'el'
+        ? (product.description_el || '')
+        : (product.description_en || '');
+
+    price.className = 'price';
+
+    price.textContent =
+      Number(product.price).toFixed(2) + ' €';
+
+    info.append(name, description, price);
+
+    article.appendChild(info);
+
+    box.appendChild(article);
   });
 }
 
+/* RENDER EVERYTHING */
 function render() {
   renderCategories();
   renderProducts();
 }
 
+/* LOAD DATA FROM SUPABASE */
 async function loadMenu() {
-  if(!SUPABASE_URL.startsWith("https://") ||
-     SUPABASE_ANON_KEY==="YOUR_SUPABASE_PUBLISHABLE_KEY") {
-    categories=demoCategories;
-    products=[];
+  const box = document.getElementById('products');
+
+  try {
+    const [c, p, i, s] = await Promise.all([
+
+      db.from('categories')
+        .select('*')
+        .eq('active', true)
+        .order('sort_order'),
+
+      db.from('products')
+        .select('*')
+        .eq('active', true)
+        .eq('available', true)
+        .order('sort_order'),
+
+      db.from('ingredients')
+        .select('*')
+        .eq('active', true)
+        .order('sort_order'),
+
+      db.from('site_settings')
+        .select('theme')
+        .eq('id', 'main')
+        .maybeSingle()
+    ]);
+
+    const error = c.error || p.error || i.error;
+
+    if (error) {
+      throw error;
+    }
+
+    categories = c.data || [];
+
+    products = p.data || [];
+
+    ingredients = i.data || [];
+
+    if (!s.error && s.data?.theme) {
+      applyTheme(s.data.theme);
+    }
+
     render();
-    document.getElementById("products").innerHTML=
-      '<div class="empty">Η σύνδεση της βάσης δεδομένων εκκρεμεί.</div>';
-    return;
+
+  } catch (error) {
+    console.error('Menu loading error:', error);
+
+    box.innerHTML =
+      '<div class="empty">' +
+      'Δεν ήταν δυνατή η φόρτωση του καταλόγου. ' +
+      'Ελέγξτε τη σύνδεση και τις ρυθμίσεις της βάσης.' +
+      '</div>';
   }
-
-  db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-
-  const [c,p]=await Promise.all([
-    db.from("categories").select("*").eq("active",true).order("sort_order"),
-    db.from("products").select("*").eq("active",true)
-      .eq("available",true).order("sort_order")
-  ]);
-
-  if(c.error || p.error) {
-    document.getElementById("products").innerHTML=
-      '<div class="empty">Δεν ήταν δυνατή η φόρτωση του καταλόγου.</div>';
-    console.error(c.error,p.error);
-    return;
-  }
-
-  categories=c.data||[];
-  products=p.data||[];
-  render();
 }
 
+/* START */
 loadMenu();
+
 </script>
 
 </body>
