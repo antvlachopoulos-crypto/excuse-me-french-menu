@@ -22,7 +22,7 @@
   --radius:8px;
 }
 
-* { box-sizing:border-box; }
+* {box-sizing:border-box}
 
 html {
   min-height:100%;
@@ -40,7 +40,7 @@ body {
   transition:background .25s,color .25s;
 }
 
-/* THEME 1: VINTAGE PARIS */
+/* VINTAGE PARIS */
 body[data-theme="vintage-paris"] {
   --paper:#f1e4cd;
   --paper2:#fff5e1;
@@ -50,14 +50,13 @@ body[data-theme="vintage-paris"] {
   --muted:#806f5b;
   --line:#b8905d;
   --radius:4px;
-
   background-image:
     radial-gradient(ellipse at 10% 10%,rgba(163,119,67,.11),transparent 38%),
     repeating-linear-gradient(0deg,rgba(100,65,30,.018) 0 1px,transparent 1px 5px),
     linear-gradient(135deg,#ead8b9,#f7eddb 46%,#ead8b9);
 }
 
-/* THEME 2: MODERN BISTRO */
+/* MODERN BISTRO */
 body[data-theme="modern-bistro"] {
   --paper:#e8eadc;
   --paper2:#fbf9ed;
@@ -67,13 +66,12 @@ body[data-theme="modern-bistro"] {
   --muted:#647367;
   --line:#aab59d;
   --radius:16px;
-
   background-image:
     radial-gradient(circle at 90% 5%,rgba(64,101,68,.12),transparent 33%),
     linear-gradient(145deg,#e4e9dc,#f6f4e7);
 }
 
-/* THEME 3: FRENCH PATISSERIE */
+/* FRENCH PATISSERIE */
 body[data-theme="french-patisserie"] {
   --paper:#f8e8e5;
   --paper2:#fff8f3;
@@ -83,13 +81,12 @@ body[data-theme="french-patisserie"] {
   --muted:#856b70;
   --line:#e0b8b0;
   --radius:18px;
-
   background-image:
     radial-gradient(circle at 8% 8%,rgba(214,142,152,.18),transparent 32%),
     linear-gradient(145deg,#f7e1df,#fff4ed);
 }
 
-/* THEME 4: CHRISTMAS */
+/* CHRISTMAS */
 body[data-theme="christmas"] {
   --paper:#e5eadf;
   --paper2:#fff8e9;
@@ -99,7 +96,6 @@ body[data-theme="christmas"] {
   --muted:#657568;
   --line:#bba06e;
   --radius:8px;
-
   background-image:
     radial-gradient(circle at 8% 8%,rgba(178,38,35,.12),transparent 25%),
     radial-gradient(circle at 95% 12%,rgba(24,78,48,.14),transparent 29%),
@@ -120,8 +116,7 @@ header {
   position:relative;
 }
 
-header:before,
-header:after {
+header:before,header:after {
   content:"✦";
   position:absolute;
   top:55px;
@@ -130,8 +125,8 @@ header:after {
   opacity:.7;
 }
 
-header:before { left:8%; }
-header:after { right:8%; }
+header:before {left:8%}
+header:after {right:8%}
 
 .logo {
   display:block;
@@ -293,6 +288,14 @@ main {
   background:var(--paper2);
 }
 
+.ingredient-heading {
+  color:var(--accent);
+  font-size:18px;
+  margin:20px 0 8px;
+  padding-bottom:7px;
+  border-bottom:1px solid var(--line);
+}
+
 .ingredient:first-child {
   border-radius:var(--radius) var(--radius) 0 0;
 }
@@ -323,12 +326,11 @@ body[data-theme="christmas"] .product {
 }
 
 @media(max-width:520px) {
-  header { padding-top:26px; }
-
-  .logo { width:108px; }
+  header {padding-top:26px}
+  .logo {width:108px}
 
   header:before,
-  header:after { top:48px; }
+  header:after {top:48px}
 
   .categories {
     justify-content:flex-start;
@@ -352,14 +354,11 @@ body[data-theme="christmas"] .product {
     height:82px;
   }
 
-  .product h3 { font-size:16px; }
-
-  .section-title { font-size:22px; }
+  .product h3 {font-size:16px}
+  .section-title {font-size:22px}
 
   .section-title:before,
-  .section-title:after {
-    margin:0 5px;
-  }
+  .section-title:after {margin:0 5px}
 }
 </style>
 </head>
@@ -375,14 +374,14 @@ body[data-theme="christmas"] .product {
 
 <div class="language">
   <button id="greek" class="active" type="button"
-          onclick="setLanguage('el')">ΕΛΛΗΝΙΚΑ</button>
+    onclick="setLanguage('el')">ΕΛΛΗΝΙΚΑ</button>
 
   <button id="english" type="button"
-          onclick="setLanguage('en')">ENGLISH</button>
+    onclick="setLanguage('en')">ENGLISH</button>
 </div>
 
 <nav class="categories" id="categories"
-     aria-label="Menu categories"></nav>
+  aria-label="Menu categories"></nav>
 
 <main>
   <h2 class="section-title" id="sectionTitle">Ο κατάλογός μας</h2>
@@ -405,7 +404,6 @@ body[data-theme="christmas"] .product {
 <script>
 'use strict';
 
-/* SUPABASE CONNECTION */
 const SUPABASE_URL =
   'https://bybiqsrytnlptdqqtyil.supabase.co';
 
@@ -417,7 +415,6 @@ const db = window.supabase.createClient(
   SUPABASE_KEY
 );
 
-/* AVAILABLE THEMES */
 const THEMES = [
   'vintage-paris',
   'modern-bistro',
@@ -432,7 +429,6 @@ let ingredients = [];
 let selectedCategory = null;
 let currentTheme = 'vintage-paris';
 
-/* APPLY THE SELECTED THEME */
 function applyTheme(theme) {
   currentTheme = THEMES.includes(theme)
     ? theme
@@ -441,15 +437,14 @@ function applyTheme(theme) {
   document.body.dataset.theme = currentTheme;
 }
 
-/* CHANGE LANGUAGE */
 function setLanguage(lang) {
   language = lang;
 
   document.getElementById('greek')
-    .classList.toggle('active', lang === 'el');
+    .classList.toggle('active',lang === 'el');
 
   document.getElementById('english')
-    .classList.toggle('active', lang === 'en');
+    .classList.toggle('active',lang === 'en');
 
   document.getElementById('sectionTitle').textContent =
     lang === 'el' ? 'Ο κατάλογός μας' : 'Our Menu';
@@ -460,39 +455,35 @@ function setLanguage(lang) {
   render();
 }
 
-/* CATEGORY BUTTONS */
 function renderCategories() {
   const nav = document.getElementById('categories');
 
   nav.replaceChildren();
 
-  const add = (id, label) => {
-    const button = document.createElement('button');
+  const add = (id,label) => {
+    const b = document.createElement('button');
 
-    button.type = 'button';
+    b.type = 'button';
 
-    button.className =
-      'category' +
-      (selectedCategory === id ? ' active' : '');
+    b.className =
+      'category' + (selectedCategory === id ? ' active' : '');
 
-    button.textContent = label;
+    b.textContent = label;
 
-    button.onclick = () => {
+    b.onclick = () => {
       selectedCategory = id;
       render();
     };
 
-    nav.appendChild(button);
+    nav.appendChild(b);
   };
 
-  add(null, language === 'el' ? 'Όλα' : 'All');
+  add(null,language === 'el' ? 'Όλα' : 'All');
 
-  categories.forEach(category => {
+  categories.forEach(c => {
     add(
-      category.id,
-      language === 'el'
-        ? category.name_el
-        : category.name_en
+      c.id,
+      language === 'el' ? c.name_el : c.name_en
     );
   });
 
@@ -502,20 +493,16 @@ function renderCategories() {
   );
 }
 
-/* PRODUCTS AND INGREDIENTS */
 function renderProducts() {
   const box = document.getElementById('products');
+  const section = document.getElementById('ingredientsSection');
 
-  const section =
-    document.getElementById('ingredientsSection');
-
-  const isIngredients =
-    selectedCategory === 'ingredients';
+  const isIngredients = selectedCategory === 'ingredients';
 
   box.hidden = isIngredients;
   section.hidden = !isIngredients;
 
-  /* INGREDIENTS VIEW */
+  /* SWEET AND SAVORY INGREDIENTS */
   if (isIngredients) {
     const list = document.getElementById('ingredientsList');
 
@@ -532,44 +519,77 @@ function renderProducts() {
       return;
     }
 
-    ingredients.forEach(item => {
-      const row = document.createElement('div');
+    const groups = [
+      {
+        id:'sweet',
+        el:'Υλικά γλυκιάς κρέπας',
+        en:'Sweet crêpe ingredients'
+      },
+      {
+        id:'savory',
+        el:'Υλικά αλμυρής κρέπας',
+        en:'Savory crêpe ingredients'
+      }
+    ];
 
-      row.className = 'ingredient';
+    groups.forEach(group => {
+      const rows = ingredients.filter(
+        x => x.crepe_type === group.id
+      );
 
-      const name = document.createElement('span');
+      if (!rows.length) return;
 
-      name.textContent =
-        language === 'el'
-          ? item.name_el
-          : item.name_en;
+      const heading = document.createElement('h3');
+      heading.className = 'ingredient-heading';
 
-      const price = document.createElement('strong');
+      heading.textContent =
+        language === 'el' ? group.el : group.en;
 
-      price.className = 'price';
+      list.appendChild(heading);
 
-      price.style.margin = '0';
+      rows.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'ingredient';
 
-      price.textContent =
-        Number(item.price).toFixed(2) + ' €';
+        const name = document.createElement('span');
 
-      row.append(name, price);
+        name.textContent =
+          language === 'el'
+            ? item.name_el
+            : item.name_en;
 
-      list.appendChild(row);
+        row.appendChild(name);
+
+        if (
+          item.price !== null &&
+          item.price !== undefined &&
+          Number(item.price) > 0
+        ) {
+          const price = document.createElement('strong');
+          price.className = 'price';
+          price.style.margin = '0';
+          price.textContent =
+            Number(item.price).toFixed(2) + ' €';
+
+          row.appendChild(price);
+        }
+
+        list.appendChild(row);
+      });
     });
 
     return;
   }
 
-  /* PRODUCTS VIEW */
+  /* PRODUCTS */
   box.replaceChildren();
 
-  const rows = products.filter(product =>
-    product.active &&
-    product.available &&
+  const rows = products.filter(p =>
+    p.active &&
+    p.available &&
     (
       selectedCategory === null ||
-      product.category_id === selectedCategory
+      p.category_id === selectedCategory
     )
   );
 
@@ -584,106 +604,85 @@ function renderProducts() {
     return;
   }
 
-  rows.forEach(product => {
+  rows.forEach(p => {
     const article = document.createElement('article');
 
     article.className =
-      'product' +
-      (product.image_url ? '' : ' no-image');
+      'product' + (p.image_url ? '' : ' no-image');
 
-    if (product.image_url) {
+    if (p.image_url) {
       const img = document.createElement('img');
 
-      img.src = product.image_url;
-
-      img.alt =
-        language === 'el'
-          ? product.name_el
-          : product.name_en;
-
+      img.src = p.image_url;
+      img.alt = language === 'el' ? p.name_el : p.name_en;
       img.loading = 'lazy';
-
       img.onerror = () => img.remove();
 
       article.appendChild(img);
     }
 
     const info = document.createElement('div');
-
     const name = document.createElement('h3');
-
-    const description = document.createElement('p');
-
+    const desc = document.createElement('p');
     const price = document.createElement('div');
 
     name.textContent =
-      language === 'el'
-        ? product.name_el
-        : product.name_en;
+      language === 'el' ? p.name_el : p.name_en;
 
-    description.textContent =
+    desc.textContent =
       language === 'el'
-        ? (product.description_el || '')
-        : (product.description_en || '');
+        ? (p.description_el || '')
+        : (p.description_en || '');
 
     price.className = 'price';
+    price.textContent = Number(p.price).toFixed(2) + ' €';
 
-    price.textContent =
-      Number(product.price).toFixed(2) + ' €';
-
-    info.append(name, description, price);
-
+    info.append(name,desc,price);
     article.appendChild(info);
-
     box.appendChild(article);
   });
 }
 
-/* RENDER EVERYTHING */
 function render() {
   renderCategories();
   renderProducts();
 }
 
-/* LOAD DATA FROM SUPABASE */
 async function loadMenu() {
   const box = document.getElementById('products');
 
   try {
-    const [c, p, i, s] = await Promise.all([
+    const [c,p,i,s] = await Promise.all([
 
       db.from('categories')
         .select('*')
-        .eq('active', true)
+        .eq('active',true)
         .order('sort_order'),
 
       db.from('products')
         .select('*')
-        .eq('active', true)
-        .eq('available', true)
+        .eq('active',true)
+        .eq('available',true)
         .order('sort_order'),
 
       db.from('ingredients')
         .select('*')
-        .eq('active', true)
+        .eq('active',true)
         .order('sort_order'),
 
       db.from('site_settings')
         .select('theme')
-        .eq('id', 'main')
+        .eq('id','main')
         .maybeSingle()
+
     ]);
 
     const error = c.error || p.error || i.error;
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
 
     categories = c.data || [];
-
     products = p.data || [];
-
     ingredients = i.data || [];
 
     if (!s.error && s.data?.theme) {
@@ -692,8 +691,8 @@ async function loadMenu() {
 
     render();
 
-  } catch (error) {
-    console.error('Menu loading error:', error);
+  } catch(e) {
+    console.error('Menu loading error:',e);
 
     box.innerHTML =
       '<div class="empty">' +
@@ -703,10 +702,8 @@ async function loadMenu() {
   }
 }
 
-/* START */
 loadMenu();
 
 </script>
-
 </body>
 </html>
