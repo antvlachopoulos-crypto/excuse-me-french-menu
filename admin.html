@@ -389,13 +389,33 @@ function renderAll() {
 }
 
 function renderThemes() {
-  const t = themeInfo.find(x=>x.id===selectedTheme) || themeInfo[0];
-  $('themeSelect').value = t.id;
-  $('themePreview').innerHTML = `<div class="theme-swatch" data-theme="${t.id}"></div><div><strong>${t.name}</strong><small>${t.desc}</small></div>`;
-  const saved = themeInfo.find(x=>x.id===savedTheme) || themeInfo[0];
-  $('themeSelectionStatus').textContent = 'Ενεργό αποθηκευμένο θέμα: ' + saved.name;
-}
-
+ const themeInfo = [
+  {
+    id:'vintage-paris',
+    name:'Vintage Paris',
+    desc:'Παριζιάνικο vintage, περγαμηνή και μπορντό λεπτομέρειες.'
+  },
+  {
+    id:'modern-bistro',
+    name:'Modern Bistro',
+    desc:'Καθαρό design με πράσινο και εκρού.'
+  },
+  {
+    id:'french-patisserie',
+    name:'French Patisserie',
+    desc:'Απαλό ροζ, κρεμ και elegant λεπτομέρειες.'
+  },
+  {
+    id:'christmas',
+    name:'Christmas Edition',
+    desc:'Εορταστικό πράσινο, κόκκινο και χρυσό.'
+  },
+  {
+    id:'french-editorial',
+    name:'French Editorial',
+    desc:'Σύγχρονο γαλλικό editorial design, με κόκκινο, μαύρο και ivory.'
+  }
+];
 function switchTab(name) {
   ['products','categories','ingredients','appearance'].forEach(t => {
     $(t+'Tab').classList.toggle('hidden', t !== name);
