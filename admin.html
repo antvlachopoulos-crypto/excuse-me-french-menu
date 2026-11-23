@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="el">
 <head>
@@ -66,6 +67,7 @@ button.ghost{background:#eee2ce;color:var(--ink);border:1px solid var(--line)}
 .theme-swatch[data-theme="modern-bistro"]{background:linear-gradient(135deg,#e4e9dc,#fbf9ed);color:#244b37}
 .theme-swatch[data-theme="french-patisserie"]{background:linear-gradient(135deg,#f7e1df,#fff4ed);color:#aa5867}
 .theme-swatch[data-theme="christmas"]{background:radial-gradient(circle at 80% 18%,#bd3b35 0 4px,transparent 5px),linear-gradient(135deg,#1f4933,#f2ead6);color:#fff4d6}
+.theme-swatch[data-theme="french-editorial"]{background:linear-gradient(135deg,#f4f0e8 0 65%,#d52d24 65%);color:#171717}
 .preview-image{max-width:120px;max-height:120px;object-fit:cover;border-radius:8px;display:none;margin:5px 0 12px;border:1px solid var(--line)}
 .empty-state{padding:18px;text-align:center;color:var(--muted);background:#fffdf8;border:1px dashed var(--line);border-radius:8px}
 @media(max-width:620px){
@@ -190,13 +192,14 @@ button.ghost{background:#eee2ce;color:var(--ink);border:1px solid var(--line)}
 
   <section id="appearanceTab" class="panel hidden">
     <h2>Εμφάνιση καταλόγου</h2>
-    <p class="help">Επίλεξε ένα από τα τέσσερα θέματα. Η αλλαγή αποθηκεύεται στη Supabase και εμφανίζεται σε όλους τους επισκέπτες του QR.</p>
+    <p class="help">Επίλεξε ένα από τα πέντε θέματα. Η αλλαγή αποθηκεύεται στη Supabase και εμφανίζεται σε όλους τους επισκέπτες του QR.</p>
     <label for="themeSelect">Επιλογή σχεδίου</label>
     <select id="themeSelect">
       <option value="vintage-paris">1 · Vintage Paris</option>
       <option value="modern-bistro">2 · Modern Bistro</option>
       <option value="french-patisserie">3 · French Patisserie</option>
       <option value="christmas">4 · Christmas Edition</option>
+      <option value="french-editorial">5 · French Editorial</option>
     </select>
     <div id="themePreview" class="theme-preview"><div class="theme-swatch" data-theme="vintage-paris"></div><div><strong>Vintage Paris</strong><small>Παριζιάνικο vintage, περγαμηνή και μπορντό λεπτομέρειες.</small></div></div>
     <div id="themeSelectionStatus" class="status info">Φόρτωση ενεργού θέματος...</div>
@@ -218,7 +221,8 @@ const themeInfo = [
   {id:'vintage-paris',name:'Vintage Paris',desc:'Παριζιάνικο vintage, περγαμηνή και μπορντό λεπτομέρειες.'},
   {id:'modern-bistro',name:'Modern Bistro',desc:'Καθαρό design με πράσινο και εκρού.'},
   {id:'french-patisserie',name:'French Patisserie',desc:'Απαλό ροζ, κρεμ και elegant λεπτομέρειες.'},
-  {id:'christmas',name:'Christmas Edition',desc:'Εορταστικό πράσινο, κόκκινο και χρυσό.'}
+  {id:'christmas',name:'Christmas Edition',desc:'Εορταστικό πράσινο, κόκκινο και χρυσό.'},
+  {id:'french-editorial',name:'French Editorial',desc:'Σύγχρονο γαλλικό editorial design, με κόκκινο, μαύρο και ivory.'}
 ];
 
 let cats = [];
@@ -389,33 +393,19 @@ function renderAll() {
 }
 
 function renderThemes() {
- const themeInfo = [
-  {
-    id:'vintage-paris',
-    name:'Vintage Paris',
-    desc:'Παριζιάνικο vintage, περγαμηνή και μπορντό λεπτομέρειες.'
-  },
-  {
-    id:'modern-bistro',
-    name:'Modern Bistro',
-    desc:'Καθαρό design με πράσινο και εκρού.'
-  },
-  {
-    id:'french-patisserie',
-    name:'French Patisserie',
-    desc:'Απαλό ροζ, κρεμ και elegant λεπτομέρειες.'
-  },
-  {
-    id:'christmas',
-    name:'Christmas Edition',
-    desc:'Εορταστικό πράσινο, κόκκινο και χρυσό.'
-  },
-  {
-    id:'french-editorial',
-    name:'French Editorial',
-    desc:'Σύγχρονο γαλλικό editorial design, με κόκκινο, μαύρο και ivory.'
-  }
-];
+  const t = themeInfo.find(x => x.id === selectedTheme) || themeInfo[0];
+  $('themeSelect').value = t.id;
+  $('themePreview').innerHTML =
+    '<div class="theme-swatch" data-theme="' + escapeHtml(t.id) + '"></div>' +
+    '<div><strong>' + escapeHtml(t.name) + '</strong><small>' +
+    escapeHtml(t.desc) + '</small></div>';
+  $('themeSelectionStatus').textContent =
+    'Επιλεγμένο για αποθήκευση: ' + t.name +
+    (selectedTheme === savedTheme
+      ? ' (είναι ήδη ενεργό)'
+      : ' (δεν έχει αποθηκευτεί ακόμη)');
+}
+
 function switchTab(name) {
   ['products','categories','ingredients','appearance'].forEach(t => {
     $(t+'Tab').classList.toggle('hidden', t !== name);
