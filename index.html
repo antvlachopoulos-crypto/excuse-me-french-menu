@@ -171,475 +171,790 @@ body[data-theme="christmas"] .product-price{color:#a52e32}
 body[data-theme="christmas"] .ingredient{border-color:#d7c79f}
 body[data-theme="christmas"] .ingredient-heading{color:#a52e32}
 body[data-theme="christmas"] .site-footer{background:#153d2b;border-top:3px solid #cda95f;color:#f0dfb6}
-body[data-theme="christmas"] .site-footer .footer-small{color:#e8cf91}
+body[data-theme="christmas"] .site-footer .footer-small{color:#e8cf91}<!doctype html>
+
+<html lang="el">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#f3e8d6">
+
+<meta name="description" content="EXCUSE ME FRENCH — Crêpes & More, Larissa">
+
+<title>EXCUSE ME FRENCH | Crêpes & More</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root{color-scheme:light;--paper:#f2e6d1;--surface:#fff9ed;--ink:#35251f;--accent:#8d2928;--accent2:#b58b53;--muted:#78695c;--line:#cdb58c;--shadow:0 8px 24px rgba(54,34,22,.09);--radius:8px;--display:Georgia,'Times New Roman',serif;--body:Arial,Helvetica,sans-serif;--header-bg:var(--paper);--header-ink:var(--ink);--chip-bg:var(--surface);--card-bg:var(--surface)}
+
+*{box-sizing:border-box}
+
+html{min-height:100%;background:var(--paper);scroll-behavior:smooth}
+
+body{margin:0;min-height:100vh;color:var(--ink);background:var(--paper);font-family:var(--body);transition:background .25s,color .25s;overflow-x:hidden}
+
+button{font:inherit}
+
+button:focus-visible{outline:3px solid var(--accent2);outline-offset:3px}
+
+.site-shell{max-width:920px;margin:0 auto;min-height:100vh;position:relative;background:var(--paper)}
+
+.preview-ribbon{display:none;text-align:center;padding:7px 12px;background:#26221f;color:#fff;font:700 10px/1.2 var(--body);letter-spacing:2px;text-transform:uppercase}
+
+body.is-preview .preview-ribbon{display:block}
+
+.masthead{position:relative;text-align:center;padding:27px 18px 20px;background:var(--header-bg);color:var(--header-ink);overflow:hidden}
+
+.brand-topline{font:700 9px/1.4 var(--body);letter-spacing:3px;text-transform:uppercase;color:var(--accent2);margin-bottom:12px}
+
+.logo-frame{width:94px;height:94px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;background:#fffdf7;border:1px solid var(--line);box-shadow:0 4px 18px rgba(0,0,0,.08);position:relative;z-index:1}
+
+.logo{width:82%;height:82%;object-fit:contain;mix-blend-mode:multiply}
+
+.brand{font:700 clamp(26px,7vw,43px)/.98 var(--display);letter-spacing:1.5px;margin:0;color:var(--header-ink)}
+
+.subtitle{font:700 10px/1.4 var(--body);letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-top:10px}
+
+.tagline{font:italic 14px/1.4 var(--display);color:var(--muted);margin:9px 0 0}
+
+.masthead-rule{width:min(260px,72%);height:1px;background:var(--line);margin:17px auto 0;position:relative}
+
+.masthead-rule:after{content:'✦';position:absolute;left:50%;top:50%;transform:translate(-50%,-54%);padding:0 10px;background:var(--header-bg);color:var(--accent2);font-size:15px}
+
+.language-bar{display:flex;justify-content:center;gap:5px;padding:14px 12px 10px;background:var(--paper)}
+
+.language-button{border:1px solid var(--line);border-radius:999px;background:var(--chip-bg);color:var(--ink);padding:9px 17px;min-width:112px;font:700 10px/1 var(--body);letter-spacing:1.5px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+
+.language-button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.category-wrap{position:sticky;top:0;z-index:8;padding:8px 0 12px;background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid color-mix(in srgb,var(--line) 55%,transparent)}
+
+.categories{display:flex;gap:8px;overflow-x:auto;overscroll-behavior-x:contain;padding:0 14px 3px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+
+.categories::-webkit-scrollbar{display:none}
+
+.category{flex:0 0 auto;white-space:nowrap;border:1px solid var(--line);border-radius:999px;background:var(--chip-bg);color:var(--ink);padding:10px 15px;font:700 11px/1 var(--body);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.035);transition:transform .18s,background .18s,color .18s}
+
+.category:active{transform:scale(.97)}
+
+.category.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+main{padding:23px 15px 38px}
+
+.menu-heading{text-align:center;margin:0 auto 18px;max-width:620px}
+
+.menu-kicker{font:700 9px/1.3 var(--body);letter-spacing:3px;text-transform:uppercase;color:var(--accent2);margin-bottom:7px}
+
+.section-title{margin:0;color:var(--accent);font:700 clamp(24px,6vw,32px)/1.08 var(--display)}
+
+.section-description{font:12px/1.5 var(--body);color:var(--muted);margin:8px 0 0}
+
+.products-grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:760px;margin:0 auto}
+
+.product{position:relative;display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px;align-items:center;padding:12px;background:var(--card-bg);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);min-width:0;overflow:hidden}
+
+.product-visual{position:relative;display:grid;place-items:center;width:104px;aspect-ratio:1/1;overflow:hidden;border-radius:calc(var(--radius) - 2px);background:linear-gradient(145deg,#ead7b8,#fff4df);color:#9b6540}
+
+.product-visual img{width:100%;height:100%;object-fit:cover;display:block}
+
+.product-placeholder{font-size:37px;filter:drop-shadow(0 5px 4px rgba(70,40,20,.16))}
+
+.product-placeholder-caption{position:absolute;bottom:6px;left:0;right:0;text-align:center;font:700 7px/1 var(--body);letter-spacing:1.5px;color:rgba(70,40,20,.65)}
+
+.product-info{min-width:0}
+
+.product h3{font:700 18px/1.12 var(--display);color:var(--ink);margin:0 0 6px;overflow-wrap:anywhere}
+
+.product-description{font:12px/1.5 var(--body);color:var(--muted);margin:0;overflow-wrap:anywhere}
+
+.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px}
+
+.product-price{font:700 16px/1 var(--body);color:var(--accent);white-space:nowrap}
+
+.product-tag{font:700 8px/1 var(--body);letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);text-align:right}
+
+.empty{padding:28px 16px;text-align:center;color:var(--muted);font:14px/1.5 var(--body);background:var(--surface);border:1px dashed var(--line);border-radius:var(--radius)}
+
+.ingredients-panel{max-width:760px;margin:0 auto}
+
+.ingredient-group{margin:18px 0 22px}
+
+.ingredient-heading{margin:0 0 9px;padding:0 0 8px;border-bottom:1px solid var(--line);font:700 19px/1.2 var(--display);color:var(--accent)}
+
+.ingredients-list{display:grid;gap:7px}
+
+.ingredient{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 13px;background:var(--surface);border:1px solid color-mix(in srgb,var(--line) 65%,transparent);border-radius:var(--radius);font:13px/1.3 var(--body)}
+
+.ingredient-name{font-weight:600}
+
+.ingredient-price{font-weight:700;color:var(--accent);white-space:nowrap}
+
+.site-footer{padding:24px 15px 32px;text-align:center;color:var(--muted);border-top:1px solid var(--line);font:700 9px/1.8 var(--body);letter-spacing:2.2px;text-transform:uppercase}
+
+.site-footer .footer-small{display:block;margin-top:7px;font:italic 12px/1.4 var(--display);letter-spacing:0;text-transform:none}
+
+.loading{padding:38px 15px;text-align:center;color:var(--muted);font:13px var(--body)}
+
+/* 1 — VINTAGE PARIS */
+
+body[data-theme="vintage-paris"]{--paper:#eee0c6;--surface:#fff7e8;--ink:#38261e;--accent:#872b2b;--accent2:#b48b50;--muted:#786756;--line:#c8aa7c;--radius:3px;--header-bg:#f3e8d4;--card-bg:#fff8eb;background-image:radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.85),transparent 53%),repeating-linear-gradient(0deg,rgba(105,73,36,.025) 0 1px,transparent 1px 5px),linear-gradient(135deg,#e9d7b7,#f4ead7 48%,#e6d3b2)}
+
+body[data-theme="vintage-paris"] .masthead{border-bottom:1px solid var(--line)}
+
+body[data-theme="vintage-paris"] .masthead:before,body[data-theme="vintage-paris"] .masthead:after{content:'❧';position:absolute;top:48%;font:38px var(--display);color:var(--accent2);opacity:.72}
+
+body[data-theme="vintage-paris"] .masthead:before{left:5%}
+
+body[data-theme="vintage-paris"] .masthead:after{right:5%;transform:scaleX(-1)}
+
+body[data-theme="vintage-paris"] .logo-frame{border-radius:50%;border:1px double var(--accent2);box-shadow:0 0 0 5px rgba(255,248,235,.7),0 0 0 6px var(--line)}
+
+body[data-theme="vintage-paris"] .menu-heading{padding-bottom:15px;border-bottom:1px solid var(--line);position:relative}
+
+body[data-theme="vintage-paris"] .menu-heading:after{content:'✦  ✦  ✦';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);padding:0 12px;background:var(--paper);color:var(--accent2);font-size:10px;letter-spacing:5px;white-space:nowrap}
+
+body[data-theme="vintage-paris"] .product{box-shadow:0 3px 0 rgba(114,77,40,.06);border-style:double;border-width:3px}
+
+body[data-theme="vintage-paris"] .product-visual{border:1px solid #c9aa7c}
+
+body[data-theme="vintage-paris"] .product-price{font-family:var(--display);font-size:18px}
+
+/* 2 — MODERN BISTRO */
+
+body[data-theme="modern-bistro"]{--paper:#f1f0e7;--surface:#fffefa;--ink:#1e3028;--accent:#204d3b;--accent2:#bd9858;--muted:#67766d;--line:#c9d1c7;--radius:13px;--header-bg:#1e4938;--header-ink:#fffdf4;--chip-bg:#fffefa;--card-bg:#fffefa;background-image:linear-gradient(180deg,#dce5dc 0,#f2f1e9 320px,#f1f0e7 100%)}
+
+body[data-theme="modern-bistro"] .masthead{text-align:left;display:grid;grid-template-columns:76px minmax(0,1fr);align-items:center;column-gap:17px;padding:26px 22px 27px;min-height:165px}
+
+body[data-theme="modern-bistro"] .brand-topline{grid-column:2;margin:0 0 6px;color:#d8c28b}
+
+body[data-theme="modern-bistro"] .logo-frame{grid-column:1;grid-row:1 / span 4;width:76px;height:76px;margin:0;border:1px solid rgba(255,255,255,.35);box-shadow:0 8px 20px rgba(0,0,0,.2)}
+
+body[data-theme="modern-bistro"] .brand{grid-column:2;font:800 clamp(23px,6vw,34px)/.98 var(--body);letter-spacing:-1px}
+
+body[data-theme="modern-bistro"] .subtitle{grid-column:2;color:#e4c98d;letter-spacing:3px;margin-top:7px}
+
+body[data-theme="modern-bistro"] .tagline{grid-column:2;color:#e1e8dd;font:italic 13px var(--body);margin-top:6px}
+
+body[data-theme="modern-bistro"] .masthead-rule{display:none}
+
+body[data-theme="modern-bistro"] .language-bar{background:#e3e9df}
+
+body[data-theme="modern-bistro"] .language-button{border-radius:7px;font-size:10px}
+
+body[data-theme="modern-bistro"] .category-wrap{background:rgba(241,240,231,.94)}
+
+body[data-theme="modern-bistro"] .category{border-radius:8px;box-shadow:none}
+
+body[data-theme="modern-bistro"] .menu-heading{text-align:left;border-left:4px solid var(--accent);padding:2px 0 2px 13px;margin:0 auto 18px}
+
+body[data-theme="modern-bistro"] .menu-kicker{letter-spacing:2px}
+
+body[data-theme="modern-bistro"] .section-title{font:800 26px/1.1 var(--body);letter-spacing:-.7px}
+
+body[data-theme="modern-bistro"] .section-description{font-size:12px}
+
+body[data-theme="modern-bistro"] .product{grid-template-columns:112px minmax(0,1fr);border:0;box-shadow:0 4px 15px rgba(20,55,38,.07);padding:10px;border-radius:12px}
+
+body[data-theme="modern-bistro"] .product-visual{width:112px;border-radius:9px;background:linear-gradient(140deg,#d8e2d5,#f8f6e8)}
+
+body[data-theme="modern-bistro"] .product h3{font:700 17px/1.2 var(--body);letter-spacing:-.2px}
+
+body[data-theme="modern-bistro"] .product-description{font-size:11px}
+
+body[data-theme="modern-bistro"] .product-price{font-size:15px}
+
+body[data-theme="modern-bistro"] .product-tag{color:#728275}
+
+body[data-theme="modern-bistro"] .ingredient{border:0;border-radius:8px;box-shadow:0 2px 8px rgba(20,55,38,.04)}
+
+body[data-theme="modern-bistro"] .site-footer{background:#1e4938;color:#dce4d8;border:0}
+
+body[data-theme="modern-bistro"] .site-footer .footer-small{color:#e1c88f}
+
+/* 3 — FRENCH PATISSERIE */
+
+body[data-theme="french-patisserie"]{--paper:#f8e8e7;--surface:#fffaf7;--ink:#57343b;--accent:#a64f67;--accent2:#c39a6b;--muted:#896d73;--line:#e5bfc2;--radius:20px;--header-bg:#f8e6e5;--card-bg:#fffaf7;background-image:radial-gradient(circle at 8% 6%,rgba(255,255,255,.85),transparent 26%),radial-gradient(circle at 95% 20%,rgba(224,165,174,.22),transparent 28%),linear-gradient(160deg,#f8e3e2,#fff4ef 52%,#f7e6e2)}
+
+body[data-theme="french-patisserie"] .masthead{padding-top:31px;padding-bottom:24px;border-bottom:4px double #d9aeb0}
+
+body[data-theme="french-patisserie"] .brand-topline{color:#a75d6b;letter-spacing:3.5px}
+
+body[data-theme="french-patisserie"] .logo-frame{width:100px;height:100px;border:2px solid #e5bfc2;box-shadow:0 0 0 5px rgba(255,250,247,.8),0 0 0 6px #e9c8c5}
+
+body[data-theme="french-patisserie"] .brand{font-size:clamp(27px,7vw,42px);letter-spacing:1px}
+
+body[data-theme="french-patisserie"] .subtitle{letter-spacing:4px}
+
+body[data-theme="french-patisserie"] .masthead-rule{width:190px;background:#d7a5a7}
+
+body[data-theme="french-patisserie"] .masthead-rule:after{content:'❀';background:var(--header-bg);color:#b96e7c}
+
+body[data-theme="french-patisserie"] .language-button{border-radius:12px;background:rgba(255,250,247,.85)}
+
+body[data-theme="french-patisserie"] .language-button.active{background:var(--accent)}
+
+body[data-theme="french-patisserie"] .category{border-radius:13px;background:#fffaf8}
+
+body[data-theme="french-patisserie"] .category.active{background:var(--accent)}
+
+body[data-theme="french-patisserie"] .menu-heading{padding:14px 10px 16px;background:rgba(255,250,247,.55);border:1px solid rgba(217,174,176,.65);border-radius:24px 24px 8px 8px;box-shadow:0 4px 15px rgba(140,75,85,.05)}
+
+body[data-theme="french-patisserie"] .menu-kicker{color:#b56c7b}
+
+body[data-theme="french-patisserie"] .section-title{font-size:28px}
+
+body[data-theme="french-patisserie"] .product{grid-template-columns:112px minmax(0,1fr);border:1px solid #e9c8c5;box-shadow:0 5px 16px rgba(147,79,91,.08);border-radius:18px 18px 18px 5px;padding:11px}
+
+body[data-theme="french-patisserie"] .product-visual{width:112px;border-radius:14px 14px 14px 5px;background:linear-gradient(145deg,#f3d5d4,#fff5ec)}
+
+body[data-theme="french-patisserie"] .product h3{font-size:18px;color:#75404c}
+
+body[data-theme="french-patisserie"] .product-price{color:#a64f67;font-family:var(--display);font-size:19px}
+
+body[data-theme="french-patisserie"] .ingredient{border:1px solid #efd1d0;border-radius:13px;background:rgba(255,250,247,.92)}
+
+body[data-theme="french-patisserie"] .site-footer{border-top:4px double #d9aeb0;color:#956a70}
+
+/* 4 — CHRISTMAS EDITION: tree, garland, warm lights and snow */
+
+body[data-theme="christmas"]{--paper:#e8eee5;--surface:#fffaf0;--ink:#193d2c;--accent:#a52e32;--accent2:#d2ae65;--muted:#61786b;--line:#c9b47f;--radius:10px;--header-bg:#153d2b;--header-ink:#fff8e8;--chip-bg:#fffaf0;--card-bg:#fffaf0;background-image:radial-gradient(circle at 11% 15%,rgba(255,255,255,.95) 0 1px,transparent 2px),radial-gradient(circle at 82% 38%,rgba(255,255,255,.85) 0 1px,transparent 2px),radial-gradient(circle at 31% 71%,rgba(255,255,255,.75) 0 1px,transparent 2px),linear-gradient(180deg,#dfe9df,#f4f2e7 60%,#e4ecdf);background-size:83px 91px,107px 113px,131px 127px,auto}
+
+body[data-theme="christmas"] .masthead{padding-top:48px;padding-bottom:24px;border-bottom:3px solid #cda95f;background:radial-gradient(ellipse at 50% 0%,#28583d,#153d2b 73%);isolation:isolate}
+
+body[data-theme="christmas"] .masthead:before{content:'✦  ·  ✧  ·  ✦  ·  ✧  ·  ✦  ·  ✧  ·  ✦';position:absolute;z-index:0;top:8px;left:-5%;width:110%;height:24px;color:#e3c47a;letter-spacing:8px;font-size:15px;white-space:nowrap;border-bottom:2px solid rgba(221,190,113,.65);text-shadow:0 0 7px #ffdf8a}
+
+body[data-theme="christmas"] .brand-topline{color:#e7ce8d}
+
+body[data-theme="christmas"] .logo-frame{width:94px;height:94px;border:2px solid #d8b96f;box-shadow:0 0 0 4px rgba(255,248,232,.13),0 0 24px rgba(231,197,113,.15)}
+
+body[data-theme="christmas"] .brand{color:#fff7e6}
+
+body[data-theme="christmas"] .subtitle{color:#e6c77e}
+
+body[data-theme="christmas"] .tagline{color:#e8e5d5}
+
+body[data-theme="christmas"] .masthead-rule{background:#cfae66}
+
+body[data-theme="christmas"] .masthead-rule:after{content:'❄';background:#1d4a34;color:#f1d58e}
+
+.christmas-tree{display:none}
+
+.christmas-garland{display:none}
+
+body[data-theme="christmas"] .christmas-garland{display:flex;position:absolute;z-index:2;top:15px;left:0;right:0;justify-content:space-evenly;pointer-events:none}
+
+body[data-theme="christmas"] .christmas-garland:before{content:'';position:absolute;left:-5%;right:-5%;top:-15px;height:31px;border-bottom:2px solid rgba(218,190,121,.8);border-radius:0 0 50% 50%;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+
+.christmas-garland span{position:relative;display:block;width:8px;height:11px;border-radius:50% 50% 45% 45%;box-shadow:0 0 8px currentColor,0 0 14px currentColor}
+
+.christmas-garland .red{background:#e6534c;color:#ff766d}
+
+.christmas-garland .gold{background:#f2d37c;color:#ffe49a}
+
+.christmas-garland .green{background:#70b77c;color:#91e69b}
+
+.christmas-garland .blue{background:#9ed9db;color:#baf6fa}
+
+body[data-theme="christmas"] .site-shell:before,body[data-theme="christmas"] .site-shell:after{content:'❄  ✧  ❅  ✧  ❄';position:fixed;z-index:0;top:25%;font-size:15px;line-height:3.5;color:#fff;opacity:.55;pointer-events:none;text-shadow:0 1px 2px #9cb3a0}
+
+body[data-theme="christmas"] .site-shell:before{left:5px}
+
+body[data-theme="christmas"] .site-shell:after{right:5px}
+
+body[data-theme="christmas"] .christmas-tree{display:block;position:absolute;right:13px;bottom:3px;width:54px;height:77px;z-index:0;opacity:.95;pointer-events:none}
+
+.christmas-tree .tree-star{position:absolute;top:-7px;left:21px;color:#f4d88f;font-size:17px;text-shadow:0 0 9px #ffd76e}
+
+.christmas-tree .tree-layer{position:absolute;left:50%;transform:translateX(-50%);width:0;height:0;border-left:25px solid transparent;border-right:25px solid transparent;border-bottom:34px solid #2d7048;filter:drop-shadow(0 2px 2px rgba(0,0,0,.22))}
+
+.christmas-tree .layer-one{top:5px;border-left-width:19px;border-right-width:19px;border-bottom-width:26px}
+
+.christmas-tree .layer-two{top:19px;border-left-width:25px;border-right-width:25px;border-bottom-width:34px;border-bottom-color:#25633e}
+
+.christmas-tree .layer-three{top:36px;border-left-width:31px;border-right-width:31px;border-bottom-width:37px;border-bottom-color:#1e5637}
+
+.christmas-tree .tree-trunk{position:absolute;bottom:0;left:23px;width:9px;height:13px;background:#8b5b38;border-radius:2px}
+
+.christmas-tree .tree-lights{position:absolute;top:20px;left:7px;width:40px;height:34px;border-bottom:2px solid #e4c16f;border-radius:0 0 50% 50%;transform:rotate(6deg);filter:drop-shadow(0 0 3px #ffd96d)}
+
+.christmas-tree .tree-lights:before{content:'•  •  •';position:absolute;top:10px;left:5px;color:#f6d878;font-size:12px;letter-spacing:5px;text-shadow:0 0 7px #ffdc75}
+
+body[data-theme="christmas"] .category{border-color:#cbb781;box-shadow:0 2px 8px rgba(21,61,43,.06)}
+
+body[data-theme="christmas"] .category.active{background:#a52e32;border-color:#a52e32}
+
+body[data-theme="christmas"] .menu-heading{padding:13px 12px 15px;background:rgba(255,250,240,.82);border:1px solid #d0bd91;border-radius:10px;box-shadow:0 4px 14px rgba(27,68,44,.06)}
+
+body[data-theme="christmas"] .menu-kicker{color:#9b3534}
+
+body[data-theme="christmas"] .section-title{color:#1d5638}
+
+body[data-theme="christmas"] .product{border:1px solid #d7c79f;border-top:3px solid #1d6842;box-shadow:0 5px 15px rgba(24,68,43,.08)}
+
+body[data-theme="christmas"] .product:nth-child(even){border-top-color:#a52e32}
+
+body[data-theme="christmas"] .product-visual{background:linear-gradient(145deg,#e1ebdc,#fff3db)}
+
+body[data-theme="christmas"] .product-price{color:#a52e32}
+
+body[data-theme="christmas"] .ingredient{border-color:#d7c79f}
+
+body[data-theme="christmas"] .ingredient-heading{color:#a52e32}
+
+body[data-theme="christmas"] .site-footer{background:#153d2b;border-top:3px solid #cda95f;color:#f0dfb6}
+
+body[data-theme="christmas"] .site-footer .footer-small{color:#e8cf91}/* 5 — FRENCH EDITORIAL */
+
+body[data-theme="french-editorial"]{
+
+  --paper:#f4f0e8;--surface:#fffdf8;--ink:#171717;--accent:#d52d24;--accent2:#d52d24;
+
+  --muted:#68645e;--line:#ded8ce;--radius:2px;--header-bg:#f4f0e8;--header-ink:#171717;
+
+  --chip-bg:#fffdf8;--card-bg:#fffdf8;
+
+  background-image:linear-gradient(180deg,#f4f0e8 0,#f7f4ee 420px,#f4f0e8 100%);
+
+}
+
+body[data-theme="french-editorial"] .masthead{
+
+  text-align:left;padding:22px 22px 25px;border-bottom:1px solid #171717;
+
+  display:grid;grid-template-columns:68px minmax(0,1fr);column-gap:15px;align-items:center;
+
+}
+
+body[data-theme="french-editorial"] .brand-topline{
+
+  grid-column:1/-1;grid-row:1;color:#d52d24;letter-spacing:2.8px;margin:0 0 18px;font-size:9px;
+
+}
+
+body[data-theme="french-editorial"] .logo-frame{
+
+  grid-column:1;grid-row:2/span 3;width:68px;height:68px;margin:0;border:0;border-radius:0;
+
+  background:transparent;box-shadow:none;
+
+}
+
+body[data-theme="french-editorial"] .logo{width:100%;height:100%;mix-blend-mode:multiply}
+
+body[data-theme="french-editorial"] .brand{
+
+  grid-column:2;grid-row:2;font:900 clamp(25px,7vw,43px)/.86 Arial,Helvetica,sans-serif;
+
+  letter-spacing:-2px;text-transform:uppercase;
+
+}
+
+body[data-theme="french-editorial"] .subtitle{
+
+  grid-column:2;grid-row:3;color:#d52d24;text-align:left;letter-spacing:3px;font-size:9px;margin-top:9px;
+
+}
+
+body[data-theme="french-editorial"] .tagline{
+
+  grid-column:2;grid-row:4;color:#68645e;text-align:left;font:italic 12px/1.35 Georgia,serif;margin-top:6px;
+
+}
+
+body[data-theme="french-editorial"] .masthead-rule{display:none}
+
+body[data-theme="french-editorial"] .language-bar{background:#f4f0e8;padding-top:13px}
+
+body[data-theme="french-editorial"] .language-button{
+
+  border-radius:0;border:1px solid #171717;background:transparent;color:#171717;
+
+}
+
+body[data-theme="french-editorial"] .language-button.active{background:#171717;color:#fff;border-color:#171717}
+
+body[data-theme="french-editorial"] .category-wrap{
+
+  background:rgba(244,240,232,.96);border-bottom:1px solid #ded8ce;
+
+}
+
+body[data-theme="french-editorial"] .category{
+
+  border-radius:0;border:1px solid #c9c2b7;background:transparent;box-shadow:none;
+
+  text-transform:uppercase;letter-spacing:.7px;font-size:10px;
+
+}
+
+body[data-theme="french-editorial"] .category.active{background:#d52d24;border-color:#d52d24;color:#fff}
+
+body[data-theme="french-editorial"] main{padding-top:27px}
+
+body[data-theme="french-editorial"] .menu-heading{
+
+  text-align:left;margin-bottom:20px;padding:0 0 15px;border-bottom:1px solid #171717;
+
+}
+
+body[data-theme="french-editorial"] .menu-kicker{color:#d52d24;letter-spacing:2.5px}
+
+body[data-theme="french-editorial"] .section-title{
+
+  color:#171717;font:900 clamp(31px,8vw,46px)/.95 Arial,Helvetica,sans-serif;letter-spacing:-1.8px;
+
+  text-transform:uppercase;
+
+}
+
+body[data-theme="french-editorial"] .section-description{color:#68645e;font-size:12px}
+
+body[data-theme="french-editorial"] .products-grid{gap:13px}
+
+body[data-theme="french-editorial"] .product{
+
+  grid-template-columns:minmax(105px,38%) minmax(0,1fr);gap:13px;padding:0;
+
+  border:0;border-bottom:1px solid #ded8ce;border-radius:0;box-shadow:none;background:transparent;
+
+}
+
+body[data-theme="french-editorial"] .product-visual{
+
+  width:100%;aspect-ratio:1/1;border-radius:0;background:#e8e1d7;color:#171717;
+
+}
+
+body[data-theme="french-editorial"] .product-placeholder{font-size:34px}
+
+body[data-theme="french-editorial"] .product-placeholder-caption{color:#68645e}
+
+body[data-theme="french-editorial"] .product-info{padding:9px 0}
+
+body[data-theme="french-editorial"] .product h3{
+
+  color:#171717;font:800 17px/1.05 Arial,Helvetica,sans-serif;letter-spacing:-.5px;
+
+}
+
+body[data-theme="french-editorial"] .product-description{color:#68645e;font-size:11px;line-height:1.45}
+
+body[data-theme="french-editorial"] .product-price{color:#d52d24;font:800 16px/1 Arial,Helvetica,sans-serif}
+
+body[data-theme="french-editorial"] .product-tag{color:#77716a;font-size:7px;letter-spacing:1px}
+
+body[data-theme="french-editorial"] .ingredient-heading{
+
+  color:#171717;font:900 24px/1 Arial,Helvetica,sans-serif;letter-spacing:-.8px;text-transform:uppercase;
+
+}
+
+body[data-theme="french-editorial"] .ingredient{
+
+  border:0;border-bottom:1px solid #ded8ce;border-radius:0;background:transparent;padding:13px 2px;
+
+}
+
+body[data-theme="french-editorial"] .ingredient-price{color:#d52d24}
+
+body[data-theme="french-editorial"] .site-footer{
+
+  background:#171717;color:#fffdf8;border:0;text-align:left;padding:25px 22px;
+
+}
+
+body[data-theme="french-editorial"] .site-footer .footer-small{color:#d5cfc5}
 
 @media(min-width:650px){
-  main{padding-left:24px;padding-right:24px}
-  .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-  .product{grid-template-columns:94px minmax(0,1fr);gap:12px}
-  .product-visual{width:94px}
-  body[data-theme="modern-bistro"] .products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  body[data-theme="modern-bistro"] .product{grid-template-columns:90px minmax(0,1fr)}
-  body[data-theme="modern-bistro"] .product-visual{width:90px}
-  body[data-theme="french-patisserie"] .product{grid-template-columns:100px minmax(0,1fr)}
-  body[data-theme="french-patisserie"] .product-visual{width:100px}
+
+  body[data-theme="french-editorial"] .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px}
+
+  body[data-theme="french-editorial"] .product{grid-template-columns:105px minmax(0,1fr)}
+
 }
+
 @media(max-width:420px){
-  .masthead{padding-left:12px;padding-right:12px}
-  body[data-theme="vintage-paris"] .masthead:before{left:2%;font-size:27px}
-  body[data-theme="vintage-paris"] .masthead:after{right:2%;font-size:27px}
-  body[data-theme="modern-bistro"] .masthead{grid-template-columns:64px minmax(0,1fr);column-gap:12px;padding:23px 14px}
-  body[data-theme="modern-bistro"] .logo-frame{width:64px;height:64px}
-  body[data-theme="modern-bistro"] .brand{font-size:22px}
-  body[data-theme="christmas"] .christmas-tree{right:6px;transform:scale(.8);transform-origin:bottom right}
-  body[data-theme="christmas"] .brand{font-size:26px}
-  .product{grid-template-columns:88px minmax(0,1fr);gap:11px;padding:10px}
-  .product-visual{width:88px}
-  .product h3{font-size:16px}
-  .product-description{font-size:11px}
+
+  body[data-theme="french-editorial"] .masthead{grid-template-columns:58px minmax(0,1fr);padding:20px 15px}
+
+  body[data-theme="french-editorial"] .logo-frame{width:58px;height:58px}
+
+  body[data-theme="french-editorial"] .brand{font-size:25px}
+
+  body[data-theme="french-editorial"] .product{grid-template-columns:92px minmax(0,1fr);gap:11px}
+
 }
+
+@media(min-width:650px){
+
+  main{padding-left:24px;padding-right:24px}
+
+  .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+
+  .product{grid-template-columns:94px minmax(0,1fr);gap:12px}
+
+  .product-visual{width:94px}
+
+  body[data-theme="modern-bistro"] .products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+  body[data-theme="modern-bistro"] .product{grid-template-columns:90px minmax(0,1fr)}
+
+  body[data-theme="modern-bistro"] .product-visual{width:90px}
+
+  body[data-theme="french-patisserie"] .product{grid-template-columns:100px minmax(0,1fr)}
+
+  body[data-theme="french-patisserie"] .product-visual{width:100px}
+
+}
+
+@media(max-width:420px){
+
+  .masthead{padding-left:12px;padding-right:12px}
+
+  body[data-theme="vintage-paris"] .masthead:before{left:2%;font-size:27px}
+
+  body[data-theme="vintage-paris"] .masthead:after{right:2%;font-size:27px}
+
+  body[data-theme="modern-bistro"] .masthead{grid-template-columns:64px minmax(0,1fr);column-gap:12px;padding:23px 14px}
+
+  body[data-theme="modern-bistro"] .logo-frame{width:64px;height:64px}
+
+  body[data-theme="modern-bistro"] .brand{font-size:22px}
+
+  body[data-theme="christmas"] .christmas-tree{right:6px;transform:scale(.8);transform-origin:bottom right}
+
+  body[data-theme="christmas"] .brand{font-size:26px}
+
+  .product{grid-template-columns:88px minmax(0,1fr);gap:11px;padding:10px}
+
+  .product-visual{width:88px}
+
+  .product h3{font-size:16px}
+
+  .product-description{font-size:11px}
+
+}
+
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
 </style>
+
 </head>
+
 <body data-theme="vintage-paris">
+
 <div class="site-shell">
+
   <div class="preview-ribbon" id="previewRibbon">THEME PREVIEW</div>
+
   <header class="masthead">
+
     <div class="brand-topline" id="brandTopline">MAISON DE LA CRÊPE · LARISSA</div>
+
     <div class="logo-frame"><img class="logo" src="logo.png" alt="EXCUSE ME FRENCH logo"></div>
+
     <h1 class="brand">EXCUSE ME FRENCH</h1>
+
     <div class="subtitle">CRÊPES &amp; MORE</div>
+
     <p class="tagline" id="tagline">A little French taste in your day</p>
+
     <div class="masthead-rule"></div>
+
     <div class="christmas-garland" aria-hidden="true"><span class="red"></span><span class="gold"></span><span class="green"></span><span class="red"></span><span class="blue"></span><span class="gold"></span><span class="green"></span><span class="red"></span></div>
+
     <div class="christmas-tree" aria-hidden="true">
+
       <span class="tree-star">✦</span><span class="tree-layer layer-one"></span><span class="tree-layer layer-two"></span><span class="tree-layer layer-three"></span><span class="tree-lights"></span><span class="tree-trunk"></span>
+
     </div>
+
   </header>
 
   <div class="language-bar" aria-label="Language selection">
+
     <button id="greek" class="language-button active" type="button" aria-pressed="true">ΕΛΛΗΝΙΚΑ</button>
+
     <button id="english" class="language-button" type="button" aria-pressed="false">ENGLISH</button>
+
   </div>
 
   <div class="category-wrap">
+
     <nav class="categories" id="categories" aria-label="Menu categories"></nav>
+
   </div>
 
   <main>
+
     <div class="menu-heading">
+
       <div class="menu-kicker" id="menuKicker">LA CARTE</div>
+
       <h2 class="section-title" id="sectionTitle">Ο κατάλογός μας</h2>
+
       <p class="section-description" id="sectionDescription">Ανακάλυψε τις γλυκές και αλμυρές μας επιλογές.</p>
+
     </div>
+
     <div id="products" class="products-grid" aria-live="polite"><div class="loading">Φόρτωση καταλόγου...</div></div>
+
     <section id="ingredientsSection" class="ingredients-panel" hidden>
+
       <div id="ingredientsList"></div>
+
     </section>
+
   </main>
 
   <footer class="site-footer">
+
     EXCUSE ME FRENCH · CRÊPES &amp; MORE<br>LARISSA
+
     <span class="footer-small" id="footerSmall">A little French taste in your day</span>
+
   </footer>
+
 </div>
 
 <script>
+
 'use strict';
 
 const SUPABASE_URL = 'https://bybiqsrytnlptdqqtyil.supabase.co';
+
 const SUPABASE_KEY = 'sb_publishable_0bjdeVXHcr9T3oKxBtJOlg_rf7TEg_I';
+
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const THEMES = ['vintage-paris','modern-bistro','french-patisserie','christmas'];
+
+const THEMES = ['vintage-paris','modern-bistro','french-patisserie','christmas','french-editorial'];
+
 const THEME_LABELS = {
+
   'vintage-paris':'Vintage Paris',
+
   'modern-bistro':'Modern Bistro',
+
   'french-patisserie':'French Patisserie',
-  'christmas':'Christmas Edition'
+
+  'christmas':'Christmas Edition',
+
+  'french-editorial':'French Editorial'
+
 };
+
 const THEME_COPY = {
+
   el:{
+
     tagline:'Μια μικρή γαλλική απόλαυση στην ημέρα σου',
+
     kicker:'LA CARTE · Η ΓΑΛΛΙΚΗ ΜΑΣ ΓΩΝΙΑ',
+
     all:'ΟΛΑ', ingredients:'ΤΑ ΥΛΙΚΑ ΜΑΣ',
+
     menuTitle:'Ο κατάλογός μας',
+
     menuDescription:'Ανακάλυψε τις γλυκές και αλμυρές μας επιλογές.',
+
     ingredientsTitle:'Τα υλικά μας',
+
     sweet:'Υλικά γλυκιάς κρέπας', savory:'Υλικά αλμυρής κρέπας',
+
     emptyProducts:'Δεν υπάρχουν διαθέσιμα προϊόντα σε αυτή την κατηγορία.',
+
     emptyIngredients:'Δεν υπάρχουν διαθέσιμα υλικά.',
+
     photoAlt:'Φωτογραφία προϊόντος', placeholder:'MAISON CRÊPE',
+
     preview:'ΠΡΟΕΠΙΣΚΟΠΗΣΗ ΘΕΜΑΤΟΣ', footer:'Φτιαγμένο με γαλλική διάθεση στη Λάρισα'
+
   },
+
   en:{
+
     tagline:'A little French taste in your day',
+
     kicker:'LA CARTE · OUR FRENCH CORNER',
+
     all:'ALL', ingredients:'OUR INGREDIENTS',
+
     menuTitle:'Our Menu',
+
     menuDescription:'Discover our sweet and savory crêpe selection.',
+
     ingredientsTitle:'Our Ingredients',
+
     sweet:'Sweet crêpe ingredients', savory:'Savory crêpe ingredients',
+
     emptyProducts:'No available products in this category.',
+
     emptyIngredients:'No ingredients available.',
+
     photoAlt:'Product photo', placeholder:'MAISON CRÊPE',
+
     preview:'THEME PREVIEW', footer:'Made with a little French spirit in Larissa'
+
   }
+
 };
 
 let language = 'el';
+
 let categories = [];
+
 let products = [];
+
 let ingredients = [];
+
 let selectedCategory = null;
+
 let currentTheme = 'vintage-paris';
 
 const requestedPreview = new URLSearchParams(window.location.search).get('preview');
+
 const previewTheme = THEMES.includes(requestedPreview) ? requestedPreview : null;
 
 function copy() { return THEME_COPY[language]; }
 
 function applyTheme(theme) {
+
   currentTheme = THEMES.includes(theme) ? theme : 'vintage-paris';
+
   document.body.dataset.theme = currentTheme;
 
   document.getElementById('tagline').textContent =
+
     currentTheme === 'christmas'
+
       ? (language === 'el' ? 'Joyeuses fêtes · Γλυκές γιορτές!' : 'Joyeuses fêtes · Season of sweetness!')
-      : copy().tagline;
+
+      : (currentTheme === 'french-editorial'
+
+          ? (language === 'el' ? 'Η γαλλική απόλαυση, με σύγχρονη ματιά.' : 'A French classic, with a modern point of view.')
+
+          : copy().tagline);
 
   document.getElementById('brandTopline').textContent =
+
     currentTheme === 'christmas'
+
       ? 'A LITTLE CHRISTMAS MAGIC · LARISSA'
-      : (currentTheme === 'modern-bistro' ? 'FRESH CRÊPES · MADE WITH LOVE' : 'MAISON DE LA CRÊPE · LARISSA');
+
+      : (currentTheme === 'modern-bistro' ? 'FRESH CRÊPES · MADE WITH LOVE'
+
+          : (currentTheme === 'french-editorial' ? 'LE GOÛT DE PARIS · LARISSA' : 'MAISON DE LA CRÊPE · LARISSA'));
 
   if (previewTheme) {
+
     document.body.classList.add('is-preview');
+
     document.getElementById('previewRibbon').textContent =
+
       copy().preview + ' · ' + THEME_LABELS[currentTheme];
-  }
-}
-
-function setLanguage(lang) {
-  language = lang === 'en' ? 'en' : 'el';
-  document.documentElement.lang = language;
-
-  document.getElementById('greek').classList.toggle('active', language === 'el');
-  document.getElementById('english').classList.toggle('active', language === 'en');
-  document.getElementById('greek').setAttribute('aria-pressed', String(language === 'el'));
-  document.getElementById('english').setAttribute('aria-pressed', String(language === 'en'));
-
-  const t = copy();
-  document.getElementById('sectionTitle').textContent =
-    selectedCategory === 'ingredients' ? t.ingredientsTitle : t.menuTitle;
-  document.getElementById('sectionDescription').textContent =
-    selectedCategory === 'ingredients' ? '' : t.menuDescription;
-  document.getElementById('menuKicker').textContent = t.kicker;
-  document.getElementById('footerSmall').textContent = t.footer;
-
-  applyTheme(currentTheme);
-  render();
-}
-
-document.getElementById('greek').addEventListener('click', () => setLanguage('el'));
-document.getElementById('english').addEventListener('click', () => setLanguage('en'));
-
-function formatPrice(value) {
-  const n = Number(value);
-  if (!Number.isFinite(n)) return '';
-  return new Intl.NumberFormat(language === 'el' ? 'el-GR' : 'en-IE', {
-    style:'currency',
-    currency:'EUR',
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  }).format(n);
-}
-
-function renderCategories() {
-  const nav = document.getElementById('categories');
-  nav.replaceChildren();
-  const t = copy();
-
-  const add = (id, label) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'category' + (selectedCategory === id ? ' active' : '');
-    button.textContent = label;
-    button.setAttribute('aria-pressed', String(selectedCategory === id));
-
-    button.addEventListener('click', () => {
-      selectedCategory = id;
-      render();
-      document.getElementById('sectionTitle').scrollIntoView({
-        behavior:'smooth',
-        block:'nearest'
-      });
-    });
-
-    nav.appendChild(button);
-  };
-
-  add(null, t.all);
-
-  categories.forEach(category => {
-    add(
-      category.id,
-      language === 'el' ? category.name_el : category.name_en
-    );
-  });
-
-  add('ingredients', t.ingredients);
-}
-
-function makeProductCard(product) {
-  const article = document.createElement('article');
-  article.className = 'product';
-
-  const visual = document.createElement('div');
-  visual.className = 'product-visual';
-
-  if (product.image_url) {
-    const img = document.createElement('img');
-    img.src = product.image_url;
-    img.alt = language === 'el'
-      ? (product.name_el || copy().photoAlt)
-      : (product.name_en || copy().photoAlt);
-    img.loading = 'lazy';
-
-    img.onerror = () => {
-      visual.replaceChildren();
-
-      const icon = document.createElement('span');
-      icon.className = 'product-placeholder';
-      icon.textContent = '🥞';
-
-      const caption = document.createElement('span');
-      caption.className = 'product-placeholder-caption';
-      caption.textContent = copy().placeholder;
-
-      visual.append(icon, caption);
-    };
-
-    visual.appendChild(img);
-  } else {
-    const icon = document.createElement('span');
-    icon.className = 'product-placeholder';
-    icon.textContent = '🥞';
-
-    const caption = document.createElement('span');
-    caption.className = 'product-placeholder-caption';
-    caption.textContent = copy().placeholder;
-
-    visual.append(icon, caption);
-  }
-
-  const info = document.createElement('div');
-  info.className = 'product-info';
-
-  const name = document.createElement('h3');
-  name.textContent = language === 'el' ? product.name_el : product.name_en;
-
-  const description = document.createElement('p');
-  description.className = 'product-description';
-  description.textContent = language === 'el'
-    ? (product.description_el || '')
-    : (product.description_en || '');
-
-  const bottom = document.createElement('div');
-  bottom.className = 'product-bottom';
-
-  const price = document.createElement('span');
-  price.className = 'product-price';
-  price.textContent = formatPrice(product.price);
-
-  const tag = document.createElement('span');
-  tag.className = 'product-tag';
-  tag.textContent = currentTheme === 'christmas'
-    ? '✦  JOYEUSES FÊTES'
-    : (currentTheme === 'modern-bistro' ? 'MADE FRESH' : '');
-
-  bottom.append(price, tag);
-  info.append(name, description, bottom);
-  article.append(visual, info);
-
-  return article;
-}
-
-function renderProducts() {
-  const box = document.getElementById('products');
-  const section = document.getElementById('ingredientsSection');
-  const t = copy();
-  const showingIngredients = selectedCategory === 'ingredients';
-
-  box.hidden = showingIngredients;
-  section.hidden = !showingIngredients;
-
-  document.getElementById('sectionTitle').textContent =
-    showingIngredients ? t.ingredientsTitle : t.menuTitle;
-  document.getElementById('sectionDescription').textContent =
-    showingIngredients ? '' : t.menuDescription;
-
-  if (showingIngredients) {
-    renderIngredients();
-    return;
-  }
-
-  box.replaceChildren();
-
-  const visible = products.filter(product =>
-    product.active &&
-    product.available &&
-    (
-      selectedCategory === null ||
-      String(product.category_id) === String(selectedCategory)
-    )
-  );
-
-  if (!visible.length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty';
-    empty.textContent = t.emptyProducts;
-    box.appendChild(empty);
-    return;
-  }
-
-  visible.forEach(product => box.appendChild(makeProductCard(product)));
-}
-
-function renderIngredients() {
-  const list = document.getElementById('ingredientsList');
-  const t = copy();
-  list.replaceChildren();
-
-  const active = ingredients.filter(item => item.active);
-
-  if (!active.length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty';
-    empty.textContent = t.emptyIngredients;
-    list.appendChild(empty);
-    return;
-  }
-
-  [
-    {id:'sweet', title:t.sweet},
-    {id:'savory', title:t.savory}
-  ].forEach(group => {
-    const rows = active.filter(item => item.crepe_type === group.id);
-    if (!rows.length) return;
-
-    const wrapper = document.createElement('section');
-    wrapper.className = 'ingredient-group';
-
-    const heading = document.createElement('h3');
-    heading.className = 'ingredient-heading';
-    heading.textContent = group.title;
-
-    const rowsBox = document.createElement('div');
-    rowsBox.className = 'ingredients-list';
-
-    rows.forEach(item => {
-      const row = document.createElement('div');
-      row.className = 'ingredient';
-
-      const name = document.createElement('span');
-      name.className = 'ingredient-name';
-      name.textContent = language === 'el' ? item.name_el : item.name_en;
-      row.appendChild(name);
-
-      if (Number(item.price) > 0) {
-        const price = document.createElement('span');
-        price.className = 'ingredient-price';
-        price.textContent = '+' + formatPrice(item.price);
-        row.appendChild(price);
-      }
-
-      rowsBox.appendChild(row);
-    });
-
-    wrapper.append(heading, rowsBox);
-    list.appendChild(wrapper);
-  });
-}
-
-function render() {
-  renderCategories();
-  renderProducts();
-}
-
-async function loadMenu() {
-  const box = document.getElementById('products');
-
-  try {
-    const [
-      categoryResult,
-      productResult,
-      ingredientResult,
-      settingResult
-    ] = await Promise.all([
-      db.from('categories')
-        .select('*')
-        .eq('active', true)
-        .order('sort_order'),
-
-      db.from('products')
-        .select('*')
-        .eq('active', true)
-        .eq('available', true)
-        .order('sort_order'),
-
-      db.from('ingredients')
-        .select('*')
-        .eq('active', true)
-        .order('sort_order'),
-
-      db.from('site_settings')
-        .select('theme')
-        .eq('id', 'main')
-        .maybeSingle()
-    ]);
-
-    const error =
-      categoryResult.error ||
-      productResult.error ||
-      ingredientResult.error;
-
-    if (error) throw error;
-
-    categories = categoryResult.data || [];
-    products = productResult.data || [];
-    ingredients = ingredientResult.data || [];
-
-    // Preview overrides the saved theme only in this browser tab.
-    // It never changes Supabase or the theme seen by QR visitors.
-    if (previewTheme) {
-      applyTheme(previewTheme);
-    } else {
-      applyTheme(
-        settingResult.error
-          ? 'vintage-paris'
-          : (settingResult.data?.theme || 'vintage-paris')
-      );
-    }
-
-    render();
-
-  } catch (error) {
-    console.error('Menu loading error:', error);
-
-    box.replaceChildren();
-
-    const message = document.createElement('div');
-    message.className = 'empty';
-    message.textContent = language === 'el'
-      ? 'Δεν ήταν δυνατή η φόρτωση του καταλόγου. Δοκιμάστε ξανά σε λίγο.'
-      : 'The menu could not be loaded. Please try again shortly.';
-
-    box.appendChild(message);
-  }
-}
-
-applyTheme('vintage-paris');
-loadMenu();
-</script>
-</body>
-</html>
